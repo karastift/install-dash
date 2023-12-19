@@ -1,5 +1,4 @@
-apt install npm -y
-apt install python3 -y
+apt install npm python3 python3.10-venv-y python3-pip -y
 
 git clone https://github.com/karastift/dash
 git clone https://github.com/karastift/dash-web
