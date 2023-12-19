@@ -1,4 +1,5 @@
 apt install npm -y
+apt install python3 -y
 
 git clone https://github.com/karastift/dash
 git clone https://github.com/karastift/dash-web
@@ -53,5 +54,3 @@ systemctl start dashFrontEnd.service
 
 systemctl enable dashBackEnd.service
 systemctl enable dashFrontEnd.service
-
-xdg-open "http://localhost:5173/"
