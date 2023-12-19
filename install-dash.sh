@@ -1,4 +1,4 @@
-apt install xdg-open
+apt install npm -y
 
 git clone https://github.com/karastift/dash
 git clone https://github.com/karastift/dash-web
@@ -7,6 +7,7 @@ cd dash
 python3 -m venv .venv
 source ./.venv/bin/activate
 python3 -m pip install -r requirements.txt
+deactivate
 
 cd ../dash-web
 npm install
