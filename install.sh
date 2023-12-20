@@ -2,7 +2,7 @@
 
 # Install necessary dependencies
 sudo apt-get update
-sudo apt-get install -y python3-pip python3-venv nodejs npm
+sudo apt-get install -y python3-pip python3-venv
 
 # Set up and run the Flask server
 cd backend
