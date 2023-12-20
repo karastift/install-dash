@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://github.com/karastift/dash-backend
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/karastift/dash-web
