@@ -31,10 +31,6 @@ cd ../backend
 python3 -m venv venv
 ./venv/bin/pip install -r requirements.txt
 
-echo "FLASK_SECRET_KEY: kkkkjfjksdjkljkfslkjqjkjklklkas
-DASHBOARD_UPDATE_TIME: 5
-DEV: false" > config.yml
-
 cd ..
 
 # Create service for backend
