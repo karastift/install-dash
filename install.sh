@@ -37,6 +37,7 @@ DEV: false" > config.yml
 
 cd ..
 
+# Create service for backend
 sudo echo "[Unit]
 Description=dash backend
 
@@ -47,6 +48,7 @@ ExecStart=$(pwd)/backend/venv/bin/python3 $(pwd)/backend/app.py
 [Install]
 WantedBy=default.target" > /etc/systemd/system/dash-backend.service
 
+# Create service for frontend
 sudo echo "[Unit]
 Description=dash frontend
 
@@ -58,9 +60,29 @@ WorkingDirectory=$(pwd)/backend
 [Install]
 WantedBy=default.target" > /etc/systemd/system/dash-frontend.service
 
+# Reload systemctl and enable services (that they are started on reboot)
 sudo systemctl daemon-reload
 sudo systemctl enable dash-backend.service
 sudo systemctl enable dash-frontend.service
 
+# Start backend and frontend
 sudo systemctl start dash-backend.service
 sudo systemctl start dash-frontend.service
+
+# Configure pi to automatically log in as default user on boot
+sudo raspi-config nonint do_boot_behaviour B4
+
+# Create service for starting the browser in kiosk mode
+sudo echo "[Unit]
+Description=start browser to display dash interface
+After=graphical.target
+
+[Service]
+ExecStart=/usr/bin/chromium-browser --kiosk http://localhost:8080
+Restart=on-abort
+
+[Install]
+WantedBy=graphical.target" > /etc/systemd/system/dash-browser.service
+
+sudo systemctl enable dash-browser.service
+sudo systemctl start dash-browser.service
