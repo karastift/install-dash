@@ -2,7 +2,7 @@
 
 # Install necessary dependencies
 sudo apt-get update
-sudo apt-get install -y python3-pip python3-venv
+sudo apt-get install -y python3-pip python3-venv chromium-browser
 
 # Uninstall old docker verions
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
@@ -34,7 +34,7 @@ python3 -m venv venv
 cd ..
 
 # Create service for backend
-sudo echo "[Unit]
+echo "[Unit]
 Description=dash backend
 
 [Service]
@@ -42,10 +42,10 @@ Type=simple
 ExecStart=$(pwd)/backend/venv/bin/python3 $(pwd)/backend/app.py
 
 [Install]
-WantedBy=default.target" > /etc/systemd/system/dash-backend.service
+WantedBy=default.target" > ./dash-backend.service
 
 # Create service for frontend
-sudo echo "[Unit]
+echo "[Unit]
 Description=dash frontend
 
 [Service]
@@ -54,7 +54,10 @@ ExecStart=/usr/bin/docker compose up
 WorkingDirectory=$(pwd)/backend
 
 [Install]
-WantedBy=default.target" > /etc/systemd/system/dash-frontend.service
+WantedBy=default.target" > ./dash-frontend.service
+
+sudo cp ./dash-backend.service /etc/systemd/system/dash-backend.service
+sudo cp ./dash-frontend.service /etc/systemd/system/dash-frontend.service
 
 # Reload systemctl and enable services (that they are started on reboot)
 sudo systemctl daemon-reload
@@ -69,7 +72,7 @@ sudo systemctl start dash-frontend.service
 sudo raspi-config nonint do_boot_behaviour B4
 
 # Create service for starting the browser in kiosk mode
-sudo echo "[Unit]
+echo "[Unit]
 Description=start browser to display dash interface
 After=graphical.target
 
@@ -78,7 +81,9 @@ ExecStart=/usr/bin/chromium-browser --kiosk http://localhost:8080
 Restart=on-abort
 
 [Install]
-WantedBy=graphical.target" > /etc/systemd/system/dash-browser.service
+WantedBy=graphical.target" > ./dash-browser.service
+
+sudo cp ./dash-browser.service /etc/systemd/system/dash-browser.service
 
 sudo systemctl enable dash-browser.service
 sudo systemctl start dash-browser.service
