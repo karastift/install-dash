@@ -98,6 +98,12 @@ sudo systemctl enable dash-browser.service
 
 cd ..
 
+echo "
+!!!
+Now installing rpi-audio-receiver, normally just bluetooth module is needed (dont install hifiberry if youre not using it!)
+!!!
+"
+
 # install rpi-audio-receiver
 wget -q https://github.com/nicokaiser/rpi-audio-receiver/archive/main.zip
 unzip main.zip
