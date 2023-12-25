@@ -1,8 +1,13 @@
 #!/bin/bash
 
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    echo "This script needs to be run as root. Exiting..."
+    exit
+fi
+
 # Install necessary dependencies
 sudo apt-get update
-sudo apt-get install -y python3-pip python3-venv chromium-browser
+sudo apt-get install -y python3-pip python3-venv chromium-browser xorg
 
 # Uninstall old docker verions
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
@@ -71,19 +76,8 @@ sudo systemctl start dash-frontend.service
 # Configure pi to automatically log in as default user on boot
 sudo raspi-config nonint do_boot_behaviour B4
 
-# Create service for starting the browser in kiosk mode
-echo "[Unit]
-Description=start browser to display dash interface
-After=graphical.target
+# configure x server to display chromium in kiosk mode and display frontend
+echo "/usr/bin/chromium-browser --kiosk http://localhost:8080 --start-fullscreen --window-size=1024,600" > ~/.xinitrc
 
-[Service]
-ExecStart=/usr/bin/chromium-browser --kiosk http://localhost:8080
-Restart=on-abort
-
-[Install]
-WantedBy=graphical.target" > ./dash-browser.service
-
-sudo cp ./dash-browser.service /etc/systemd/system/dash-browser.service
-
-sudo systemctl enable dash-browser.service
-sudo systemctl start dash-browser.service
+# start x server, without rebooting
+startx
