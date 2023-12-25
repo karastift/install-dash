@@ -96,5 +96,18 @@ sudo cp ./dash-browser.service /etc/systemd/system/dash-browser.service
 sudo systemctl daemon-reload
 sudo systemctl enable dash-browser.service
 
-# start browser
-sudo systemctl start dash-browser.service
+cd ..
+
+# install rpi-audio-receiver
+wget -q https://github.com/nicokaiser/rpi-audio-receiver/archive/main.zip
+unzip main.zip
+rm main.zip
+
+cd rpi-audio-receiver-main
+sudo ./install.sh
+
+echo "
+!!!
+DONT FORGET TO CHANGE THE AUDIO DEVICE TO DIGIAMP IN raspi-config and then REBOOT to activate rpi-audio-receiver
+!!!
+"
