@@ -78,8 +78,23 @@ sudo systemctl start dash-frontend.service
 # Configure pi to automatically log in as default user on boot
 sudo raspi-config nonint do_boot_behaviour B4
 
-# configure x server to display chromium in kiosk mode and display frontend
-echo "/usr/bin/chromium-browser --kiosk http://localhost:8080 --start-fullscreen --window-size=1024,600" > ~/.xinitrc
+# Create service for starting browser that displays frontend
+echo "[Unit]
+Description=dash browser starter
 
-# start x server, without rebooting
-startx
+[Service]
+Type=simple
+ExecStart=/usr/bin/xinit /usr/bin/chromium-browser --kiosk http://localhost:8080 --start-fullscreen --window-size=1024,600 --no-sandbox
+WorkingDirectory=$(pwd)
+
+[Install]
+WantedBy=default.target" > ./dash-browser.service
+
+sudo cp ./dash-browser.service /etc/systemd/system/dash-browser.service
+
+# Reload systemctl and enable service (that they are started on reboot)
+sudo systemctl daemon-reload
+sudo systemctl enable dash-browser.service
+
+# start browser
+sudo systemctl start dash-browser.service
