@@ -51,7 +51,7 @@ Description=dash frontend
 [Service]
 Type=simple
 ExecStart=/usr/bin/docker compose up
-WorkingDirectory=$(pwd)/backend
+WorkingDirectory=$(pwd)/frontend
 
 [Install]
 WantedBy=default.target" > ./dash-frontend.service
