@@ -76,7 +76,7 @@ sudo systemctl start dash-backend.service
 sudo systemctl start dash-frontend.service
 
 # Configure pi to automatically log in as default user on boot
-sudo raspi-config nonint do_boot_behaviour B4
+sudo raspi-config nonint do_boot_behaviour B2
 
 # Create service for starting browser that displays frontend
 echo "[Unit]
