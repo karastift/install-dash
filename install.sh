@@ -146,6 +146,9 @@ WantedBy=default.target" > ./dash-browser.service
 log "Copying dash-browser.service into /etc/systemd/system/"
 sudo cp ./dash-browser.service /etc/systemd/system/dash-browser.service
 
+log "Removing service files in this directory"
+rm ./*.service
+
 # Reload systemctl and enable service (that they are started on reboot)
 log "Reloading systemctl daemon and enabling dash-browser.service"
 sudo systemctl daemon-reload
