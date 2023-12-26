@@ -25,11 +25,11 @@ if [[ $(/usr/bin/id -u) -ne 0 ]]; then
 fi
 
 # Ask for options
-read -p "$(tput setaf 4)Enter screen width [1440]: $(tput setaf 0)" screen_width
-screen_width=${screen_width:-1440}
+read -p "$(tput setaf 4)Enter screen width [1152]: $(tput setaf 0)" screen_width
+screen_width=${screen_width:-1152}
 
-read -p "$(tput setaf 4)Enter screen height [900]: $(tput setaf 0)" screen_height
-screen_height=${screen_height:-900}
+read -p "$(tput setaf 4)Enter screen height [864]: $(tput setaf 0)" screen_height
+screen_height=${screen_height:-864}
 
 # Install necessary dependencies
 log "Installing necessary dependencies: python3-pip python3-venv chromium-browser xorg"
@@ -137,7 +137,7 @@ Description=dash browser starter
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/xinit /usr/bin/chromium-browser --kiosk http://localhost:8080 --start-fullscreen --window-size=1440,900 --no-sandbox
+ExecStart=/usr/bin/xinit /usr/bin/chromium-browser --window-size=$screen_width,$screen_height --no-sandbox --kiosk http://localhost:8080
 WorkingDirectory=$(pwd)
 
 [Install]
