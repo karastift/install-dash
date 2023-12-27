@@ -139,6 +139,7 @@ Description=dash browser starter
 Type=simple
 ExecStart=/usr/bin/xinit /usr/bin/chromium-browser --window-size=$screen_width,$screen_height --no-sandbox --kiosk http://localhost:8080
 WorkingDirectory=$(pwd)
+ExecStartPost=/usr/bin/xset s off
 
 [Install]
 WantedBy=default.target" > ./dash-browser.service
